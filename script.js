@@ -12,38 +12,28 @@ window.onload = function () {
 };
 
 function renderDropdowns(assets) {
-  const container = document.getElementById('asset-container');
-  const categories = ["Infrastructure", "Application", "Monitoring"];
+  const infraSelect = document.getElementById('infrastructure-select');
+  const appSelect = document.getElementById('application-select');
+  const monitorSelect = document.getElementById('monitoring-select');
 
-  categories.forEach(category => {
-    const section = document.createElement('div');
-    section.className = 'dropdown-section';
+  // Clear existing options except the first
+  infraSelect.length = 1;
+  appSelect.length = 1;
+  monitorSelect.length = 1;
 
-    const label = document.createElement('label');
-    label.textContent = `Select ${category}`;
-    section.appendChild(label);
+  assets.forEach(asset => {
+    const option = document.createElement('option');
+    option.value = asset.id;
+    option.textContent = asset.name;
 
-    const select = document.createElement('select');
-    select.innerHTML = `<option disabled selected>Select ${category}</option>`;
-
-    // Filter and add options
-    assets
-      .filter(asset => asset.category === category)
-      .forEach(asset => {
-        const option = document.createElement('option');
-        option.value = asset.id;
-        option.textContent = asset.name;
-        select.appendChild(option);
-      });
-
-    // Handle selection
-    select.addEventListener('change', function () {
-      selectedAssets[category] = this.value;
-    });
-
-    section.appendChild(select);
-    container.appendChild(section);
+    if (asset.category === "Infrastructure") infraSelect.appendChild(option);
+    if (asset.category === "Application") appSelect.appendChild(option);
+    if (asset.category === "Monitoring") monitorSelect.appendChild(option);
   });
+
+  infraSelect.onchange = () => selectedAssets.Infrastructure = infraSelect.value;
+  appSelect.onchange = () => selectedAssets.Application = appSelect.value;
+  monitorSelect.onchange = () => selectedAssets.Monitoring = monitorSelect.value;
 }
 
 function triggerDeployment() {
