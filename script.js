@@ -7,42 +7,43 @@ let selectedAssets = {
 window.onload = function () {
   fetch('assets/catalog.json')
     .then(response => response.json())
-    .then(data => renderDropdowns(data))
+    .then(data => populateDropdowns(data))
     .catch(error => console.error('Error loading catalog:', error));
 };
 
-function renderDropdowns(assets) {
-  const infrastructureSelect = document.getElementById('infrastructure-select');
-  const applicationSelect = document.getElementById('application-select');
-  const monitoringSelect = document.getElementById('monitoring-select');
+function populateDropdowns(assets) {
+  const infraSelect = document.getElementById("infrastructure-select");
+  const appSelect = document.getElementById("application-select");
+  const monitorSelect = document.getElementById("monitoring-select");
 
   assets.forEach(asset => {
-    const option = document.createElement('option');
+    const option = document.createElement("option");
     option.value = asset.id;
-    option.text = asset.name;
+    option.textContent = asset.name;
 
     if (asset.category === "Infrastructure") {
-      infrastructureSelect.appendChild(option);
+      infraSelect.appendChild(option);
     } else if (asset.category === "Application") {
-      applicationSelect.appendChild(option);
+      appSelect.appendChild(option);
     } else if (asset.category === "Monitoring") {
-      monitoringSelect.appendChild(option);
+      monitorSelect.appendChild(option);
     }
   });
 
-  infrastructureSelect.addEventListener("change", e => selectedAssets.infrastructure = e.target.value);
-  applicationSelect.addEventListener("change", e => selectedAssets.application = e.target.value);
-  monitoringSelect.addEventListener("change", e => selectedAssets.monitoring = e.target.value);
+  infraSelect.addEventListener("change", e => selectedAssets.infrastructure = e.target.value);
+  appSelect.addEventListener("change", e => selectedAssets.application = e.target.value);
+  monitorSelect.addEventListener("change", e => selectedAssets.monitoring = e.target.value);
 }
 
 function triggerDeployment() {
-  const selected = Object.values(selectedAssets).filter(Boolean);
-  if (selected.length === 0) {
-    alert("Please select at least one category.");
+  const { infrastructure, application, monitoring } = selectedAssets;
+
+  if (!infrastructure && !application && !monitoring) {
+    alert("Please select at least one option.");
     return;
   }
 
-  // Later this will trigger GitHub API
-  alert("Selected Assets:\n" + JSON.stringify(selectedAssets, null, 2));
+  // Later: Call GitHub REST API
+  alert(`Selected Modules:\n\nInfrastructure: ${infrastructure || "None"}\nApplication: ${application || "None"}\nMonitoring: ${monitoring || "None"}`);
 }
 
