@@ -3,30 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Platform Engineering Catalog - AWS EKS</title>
+  <title>Golden Path Deployment</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Platform Engineering Catalog</h1>
+  <div class="container">
+    <h1>Golden Path: Deploy to AWS</h1>
 
-  <div class="form-group">
-    <label for="infrastructure-select">Infrastructure:</label>
-    <select id="infrastructure-select"><option value="">--Select--</option></select>
+    <div class="section">
+      <h2>Infrastructure</h2>
+      <select id="infrastructure-select">
+        <option value="">-- Select Infrastructure --</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <h2>Application</h2>
+      <select id="application-select">
+        <option value="">-- Select Application --</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <h2>Monitoring</h2>
+      <select id="monitoring-select">
+        <option value="">-- Select Monitoring --</option>
+      </select>
+    </div>
+
+    <button onclick="triggerDeployment()">🚀 Deploy Selected</button>
   </div>
-
-  <div class="form-group">
-    <label for="application-select">Application:</label>
-    <select id="application-select"><option value="">--Select--</option></select>
-  </div>
-
-  <div class="form-group">
-    <label for="monitoring-select">Monitoring:</label>
-    <select id="monitoring-select"><option value="">--Select--</option></select>
-  </div>
-
-  <button onclick="triggerDeployment()">🚀 Deploy Selected</button>
 
   <script src="script.js"></script>
 </body>
 </html>
+
 
